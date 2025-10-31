@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing Press Receipt</title>
+    <style>
+        body { background: #f4f6fa; font-family: 'Segoe UI', Arial, sans-serif; }
+        .receipt-container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            padding: 32px 36px 24px 36px;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+        .logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+        .company-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+        .company-address {
+            font-size: 0.95em;
+            color: #7b8a8b;
+            margin-bottom: 8px;
+        }
+        .receipt-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+        }
+        .details-table td {
+            padding: 8px 6px;
+            font-size: 1em;
+        }
+        .details-table tr {
+            border-bottom: 1px solid #eaeaea;
+        }
+        .details-table td.label {
+            font-weight: 600;
+            color: #2c3e50;
+            width: 40%;
+        }
+        .details-table td.value {
+            color: #444;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.95em;
+            color: #7b8a8b;
+            margin-top: 18px;
+        }
+        .btn {
+            padding: 10px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .btn-print { background: #007bff; color: #fff; }
+        .btn-back { background: #e74c3c; color: #fff; }
+        @media print {
+            .btn, .btn-back { display: none; }
+            .footer { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            {% if company_logo %}
+                <img src="{{ url_for('static', filename='uploads/' ~ company_logo) }}" alt="Logo" class="logo">
+            {% else %}
+                <img src="https://img.icons8.com/ios-filled/100/000000/print.png" alt="Logo" class="logo">
+            {% endif %}
+            <div class="company-name">{{ company_name }}</div>
+            <div class="company-address">{{ company_address }}<br>{{ company_phone }}</div>
+            <div class="receipt-title">Order Receipt</div>
+        </div>
+        <table class="details-table">
+            <tr><td class="label">Order ID:</td><td class="value">{{ order[0] }}</td></tr>
+            <tr><td class="label">Customer Name:</td><td class="value">{{ order[1] }}</td></tr>
+            <tr><td class="label">Mobile:</td><td class="value">{{ order[2] }}</td></tr>
+            <tr><td class="label">Service:</td><td class="value">{{ order[5] }}</td></tr>
+            <tr><td class="label">Amount:</td><td class="value">GHC {{ "%.2f"|format(order[6]) }}</td></tr>
+            <tr><td class="label">Payment Mode:</td><td class="value">{{ order[7] }}</td></tr>
+            <tr><td class="label">Order Date:</td><td class="value">{{ order[8] }}</td></tr>
+            <tr><td class="label">Status:</td><td class="value">{{ order[9] }}</td></tr>
+        </table>
+        <div class="footer">
+            Thank you for your business!<br>
+            Receipt generated on {{ order[8] }}
+        </div>
+        <div style="text-align:center;margin-top:24px;">
+            <button onclick="window.print()" class="btn btn-print">Print Receipt</button>
+            <button onclick="window.close()" class="btn btn-back">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>
+        </a>
+    </div>
+</div>
+
+<style>
+    @media print {
+        button, a {
+            display: none;
+        }
+        body {
+            background: white;
+        }
+        div {
+            border: none;
+            box-shadow: none;
+        }
+    }
+</style>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Customer Details{% endblock %}
+{% block header %}Customer Details{% endblock %}
+{% block content %}
+<div class="form-section" style="max-width:500px;margin:auto;">
+    <h2>Customer Details</h2>
+    {% if customer %}
+    <table style="width:100%;margin-top:20px;">
+        <tr><th style="text-align:left;padding:8px;">ID</th><td style="padding:8px;">{{ customer[0] }}</td></tr>
+        <tr><th style="text-align:left;padding:8px;">Name</th><td style="padding:8px;">{{ customer[1] }}</td></tr>
+    <!-- Removed Contact Info row -->
+        <tr><th style="text-align:left;padding:8px;">Mobile</th><td style="padding:8px;">{{ customer[3] }}</td></tr>
+        <tr><th style="text-align:left;padding:8px;">Email</th><td style="padding:8px;">{{ customer[4] }}</td></tr>
+        <tr><th style="text-align:left;padding:8px;">Address</th><td style="padding:8px;">{{ customer[5] }}</td></tr>
+    </table>
+    {% else %}
+    <p>No customer found.</p>
+    {% endif %}
+    <div style="margin-top:20px;text-align:right;">
+        <a href="{{ url_for('view_customer') }}" style="padding:8px 16px;background:#1976d2;color:#fff;border-radius:5px;text-decoration:none;">Back to List</a>
+    </div>
+</div>
+{% endblock %}

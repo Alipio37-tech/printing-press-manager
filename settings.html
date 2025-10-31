@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block header %}Settings{% endblock %}
+{% block content %}
+    <h2>Company Settings</h2>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('settings') }}" style="max-width:500px;margin:auto;">
+        <div style="margin-bottom:16px;">
+            <label for="company_name">Company Name:</label><br>
+            <input type="text" id="company_name" name="company_name" value="{{ company_name|default('Bekabe Printing Press') }}" style="width:100%;padding:8px;">
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="company_address">Address:</label><br>
+            <input type="text" id="company_address" name="company_address" value="{{ company_address|default('123 Main Street, Accra, Ghana') }}" style="width:100%;padding:8px;">
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="company_phone">Phone:</label><br>
+            <input type="text" id="company_phone" name="company_phone" value="{{ company_phone|default('+233 55 123 4567') }}" style="width:100%;padding:8px;">
+        </div>
+        <div style="margin-bottom:16px;">
+            <label for="company_logo">Logo:</label><br>
+            {% if company_logo %}
+                <img src="{{ url_for('static', filename='uploads/' ~ company_logo) }}" alt="Logo" style="max-width:100px;max-height:100px;margin-bottom:8px;display:block;">
+            {% endif %}
+            <input type="file" id="company_logo" name="company_logo" accept="image/*">
+        </div>
+        <button type="submit" style="padding:10px 30px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">Save Changes</button>
+    </form>
+    {% if message %}
+        <div style="margin-top:20px;color:green;">{{ message }}</div>
+    {% endif %}
+{% endblock %}

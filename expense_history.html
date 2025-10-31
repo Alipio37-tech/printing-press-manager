@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Expense History{% endblock %}
+{% block header %}Expense History{% endblock %}
+{% block content %}
+    <div class="table-section">
+        <h2 style="margin-bottom:0;">All Expense History</h2>
+        <table style="border-collapse:collapse;width:100%;">
+            <tr style="background:#1976d2;color:#fff;">
+                <th style="padding:12px;">Sr.No</th>
+                <th style="padding:12px;">Amount</th>
+                <th style="padding:12px;">Description</th>
+                <th style="padding:12px;">Date</th>
+            </tr>
+            {% for expense in expenses %}
+            {% if loop.index0 % 2 == 0 %}
+            <tr style="background:#f9f9f9;">
+            {% else %}
+            <tr style="background:#fff;">
+            {% endif %}
+                <td style="padding:12px;">{{ loop.index }}</td>
+                <td style="padding:12px;">{{ expense[1] }}</td>
+                <td style="padding:12px;">{{ expense[2] }}</td>
+                <td style="padding:12px;">{{ expense[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

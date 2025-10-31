@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Edit Employee{% endblock %}
+{% block header %}Edit Employee{% endblock %}
+{% block content %}
+    <div class="form-section" style="max-width:700px;margin:auto;">
+        <h2 style="margin-bottom:24px;">Edit Employee</h2>
+        <form method="post" class="styled-form">
+            <div style="margin-bottom:18px;">
+                <label for="name" style="font-weight:500;margin-bottom:6px;display:block;">Employee Name</label>
+                <input type="text" id="name" name="name" value="{{ employee[1] }}" required>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label for="role" style="font-weight:500;margin-bottom:6px;display:block;">Role</label>
+                <input type="text" id="role" name="role" value="{{ employee[2] }}" required>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label for="mobile" style="font-weight:500;margin-bottom:6px;display:block;">Mobile</label>
+                <input type="text" id="mobile" name="mobile" value="{{ employee[3] }}" required>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label for="email" style="font-weight:500;margin-bottom:6px;display:block;">Email</label>
+                <input type="email" id="email" name="email" value="{{ employee[4] }}" required>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label for="address" style="font-weight:500;margin-bottom:6px;display:block;">Address</label>
+                <input type="text" id="address" name="address" value="{{ employee[5] }}" required>
+            </div>
+            <button type="submit" style="background:#3f51b5;font-weight:700;font-size:1.1em;width:100%;margin-top:10px;">Update Employee</button>
+        </form>
+    </div>
+{% endblock %}

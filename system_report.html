@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}System Report{% endblock %}
+{% block header %}System Report{% endblock %}
+{% block content %}
+    <div class="report-container">
+        <h2>System Summary</h2>
+        <ul>
+            <li><strong>Total Customers:</strong> {{ total_customers }}</li>
+            <li><strong>Total Orders:</strong> {{ total_orders }}</li>
+            <li><strong>Pending Orders:</strong> {{ pending_orders }}</li>
+            <li><strong>Completed Orders (Paid/Credit):</strong> {{ completed_orders }}</li>
+            <li><strong>Credit Customers:</strong> {{ credit_customers_count }}</li>
+            <li><strong>Total Employees:</strong> {{ total_employees }}</li>
+            <li><strong>Total Revenue:</strong> ₦{{ total_revenue }}</li>
+        </ul>
+        <h3>Recent Orders</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.service }}</td>
+                    <td>₦{{ order.amount }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.order_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

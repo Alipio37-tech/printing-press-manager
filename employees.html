@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Employees{% endblock %}
+{% block header %}Employees{% endblock %}
+{% block content %}
+    <!-- Add Employee Modal -->
+    <div id="employeeModal" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.15);z-index:1000;align-items:center;justify-content:center;">
+        <div class="form-section" style="max-width:500px;margin:auto;box-shadow:0 4px 24px rgba(0,0,0,0.12);position:relative;">
+            <button onclick="closeEmployeeModal()" style="position:absolute;top:18px;right:18px;background:none;border:none;font-size:1.5em;color:#888;cursor:pointer;">&times;</button>
+            <h2 style="margin-top:10px;">Add Employee</h2>
+            <form method="post" class="styled-form">
+                <input type="text" name="name" placeholder="Employee Name" required>
+                <input type="text" name="role" placeholder="Role" required>
+                <input type="text" name="mobile" placeholder="Mobile" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <button type="submit" style="background:#3f51b5;font-weight:700;font-size:1.1em;">Add Employee</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-section">
+        <h2>Existing Employees</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <span style="font-weight:500;">{{ employees|length }} Records Found.</span>
+            <a href="#" onclick="openEmployeeModal();return false;" style="padding:8px 16px;background:#1976d2;color:#fff;border:none;border-radius:5px;text-decoration:none;">New Employee</a>
+        </div>
+        <table>
+            <tr><th>ID</th><th>Name</th><th>Role</th><th>Mobile</th><th>Email</th><th>Address</th><th>Actions</th></tr>
+            {% for employee in employees %}
+            <tr>
+                <td>{{ employee[0] }}</td>
+                <td>{{ employee[1] }}</td>
+                <td>{{ employee[2] }}</td>
+                <td>{{ employee[3] }}</td>
+                <td>{{ employee[4] }}</td>
+                <td>{{ employee[5] }}</td>
+                <td>
+                    <a href="/edit_employee/{{ employee[0] }}">Edit</a>
+                    <form action="/delete_employee/{{ employee[0] }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Delete this employee?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+<script>
+function openEmployeeModal() {
+    document.getElementById('employeeModal').style.display = 'flex';
+}
+function closeEmployeeModal() {
+    document.getElementById('employeeModal').style.display = 'none';
+}
+</script>
+{% endblock %}

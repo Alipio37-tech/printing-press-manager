@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Printing Press Management System">
+    <title>{% block title %}Printing Press Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        {% block sidebar %}
+        <aside class="sidebar" aria-label="Main navigation">
+            <nav>
+                <ul role="list" class="menubar">
+                    <li>
+                        <a href="{{ url_for('dashboard') }}" class="nav-link{% if request.endpoint=='dashboard' %} active{% endif %}" aria-current="page">
+                            <span style="margin-right:8px;">&#128200;</span>Dashboard
+                        </a>
+                    </li>
+                    {% if session.get('user_id') == 1 %}
+                    <li>
+                        <a href="{{ url_for('users') }}" class="nav-link{% if request.endpoint=='users' %} active{% endif %}">
+                            <span style="margin-right:8px;">&#128100;</span>User Control
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="dropdown">
+    <a href="#" class="nav-link{% if request.endpoint in ['add_order','view_order','customer_ledger','view_customer','payment_voucher','complete_order'] %} active{% endif %}" onclick="toggleDropdown(event)">
+        <span style="margin-right:8px;">&#128221;</span>Customers &#9662;
+    </a>
+    <ul class="dropdown-menu" style="display:none;">
+        <li><a href="{{ url_for('add_order') }}" class="nav-link">Add Order</a></li>
+        <li><a href="{{ url_for('view_order') }}" class="nav-link">View Orders</a></li>
+    <li><a href="{{ url_for('customer_ledger') }}" class="nav-link">Credit Customers</a></li>
+        <li><a href="{{ url_for('view_customer') }}" class="nav-link">View Customer</a></li>
+        <li><a href="{{ url_for('payment_voucher') }}" class="nav-link">Paid Customers</a></li>
+    <li><a href="{{ url_for('complete_order') }}" class="nav-link">Complete Order</a></li>
+    </ul>
+</li>
+
+                    <li>
+                        <a href="{{ url_for('employees') }}" class="nav-link{% if request.endpoint=='employees' %} active{% endif %}">
+                            <span style="margin-right:8px;">&#128188;</span>Employees
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('expenses') }}" class="nav-link{% if request.endpoint=='expenses' %} active{% endif %}">
+                            <span style="margin-right:8px;">&#128179;</span>Expense
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('service') }}" class="nav-link{% if request.endpoint=='service' %} active{% endif %}">
+                            <span style="margin-right:8px;">&#128241;</span>Calculator
+                        </a>
+                    </li>
+                    {% if session.get('user_id') == 1 %}
+                    <li>
+                        <a href="{{ url_for('settings') }}" class="nav-link{% if request.endpoint=='settings' %} active{% endif %}">
+                            <span style="margin-right:8px;">&#9881;</span>Settings
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="#" class="nav-link{% if request.endpoint=='logout' %} active{% endif %}" id="logout-link">
+                            <span style="margin-right:8px;">&#128682;</span>Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <script>
+        function toggleDropdown(e) {
+            e.preventDefault();
+            var parent = e.target.closest('.dropdown');
+            var menu = parent.querySelector('.dropdown-menu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+                if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        });
+        </script>
+
+        <div id="logout-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+            <div style="background:#fff; padding:32px 24px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); max-width:350px; margin:auto; text-align:center;">
+                <h3 style="margin-bottom:16px;">Confirm Logout</h3>
+                <p style="margin-bottom:24px;">Are you sure you want to logout?<br>Any unsaved changes will be lost.</p>
+                <button id="confirm-logout" style="background:#d9534f; color:#fff; border:none; padding:8px 20px; border-radius:4px; margin-right:10px; cursor:pointer;">Logout</button>
+                <button id="cancel-logout" style="background:#5bc0de; color:#fff; border:none; padding:8px 20px; border-radius:4px; cursor:pointer;">Cancel</button>
+            </div>
+        </div>
+        <script>
+        function toggleDropdown(e) {
+            e.preventDefault();
+            var parent = e.target.closest('.dropdown');
+            var menu = parent.querySelector('.dropdown-menu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+                if (!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        });
+        document.getElementById('logout-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('logout-modal').style.display = 'flex';
+        });
+        document.getElementById('cancel-logout').addEventListener('click', function() {
+            document.getElementById('logout-modal').style.display = 'none';
+        });
+        document.getElementById('confirm-logout').addEventListener('click', function() {
+            window.location.href = "{{ url_for('logout') }}";
+        });
+        </script>
+        {% endblock %}
+
+        <!-- Main Content Area -->
+        <main class="main-content" role="main">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

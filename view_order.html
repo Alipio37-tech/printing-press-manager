@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}View Order{% endblock %}
+{% block header %}View Order{% endblock %}
+{% block content %}
+<div class="form-section" style="max-width:1400px;margin:auto;">
+    <h2>Pending Orders</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <!-- Removed Contact column -->
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Service Type</th>
+                <th>Order Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in pending_orders %}
+            <tr>
+                <td>{{ order[0] }}</td>
+                <td>{{ order[1] }}</td>
+                <!-- Removed Contact cell -->
+                <td>{{ order[3] }}</td>
+                <td>{{ order[4] }}</td>
+                <td>{{ order[5] }}</td>
+                <td>{{ order[6] }}</td>
+                <td>{{ order[7] }}</td>
+                <td>{{ order[8] }}</td>
+                <td>
+                    <form action="{{ url_for('complete_order') }}" method="post" style="display:inline;">
+                        <input type="hidden" name="order_id" value="{{ order[0] }}">
+                        <button type="submit" class="btn btn-success" onclick="return confirm('Mark this order as complete?');">Complete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="9">No pending orders found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

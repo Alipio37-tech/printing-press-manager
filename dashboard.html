@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block header %}Dashboard <span class="status">Online</span>{% endblock %}
+{% block content %}
+    <div class="card-container">
+        <a href="/customers" class="card" style="text-decoration:none; color:inherit;">
+            <h3>{{ total_orders }}</h3>
+            <p>Total Customers</p>
+        </a>
+        <a href="/view_order" class="card" style="text-decoration:none; color:inherit;">
+            <h3>{{ pending_orders }}</h3>
+            <p>Pending Orders</p>
+        </a>
+        <a href="/completed_orders" class="card" style="text-decoration:none; color:inherit;">
+            <h3>{{ completed_orders }}</h3>
+            <p>Completed Orders</p>
+        </a>
+        <a href="/employees" class="card" style="text-decoration:none; color:inherit;">
+            <h3>{{ working_orders }}</h3>
+            <p>Total Employees</p>
+        </a>
+            <a href="/customer_ledger" class="card" style="text-decoration:none; color:inherit;">
+                <h3>{{ credit_customers_count }}</h3>
+                <p>Credit Customers</p>
+            </a>
+    </div>
+    <div style="margin-top:40px;">
+        <h2>Reports & Analytics</h2>
+        <p>Charts and reports will be displayed here.</p>
+    </div>
+{% endblock %}

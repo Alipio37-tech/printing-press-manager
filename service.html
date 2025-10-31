@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block title %}Service{% endblock %}
+{% block header %}Service{% endblock %}
+{% block content %}
+<div class="service-grid-3">
+    <div class="service-col">
+        <div class="form-section">
+            <h2>Sticker Price Calculator</h2>
+            <form method="post" style="margin-bottom:20px;">
+                <input type="hidden" name="service_type" value="sticker">
+                <div class="form-group">
+                    <label for="qty">Quantity:</label>
+                    <input type="number" step="any" min="1" name="qty" id="qty" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="height">Height:</label>
+                    <input type="number" step="any" min="0" name="height" id="height" class="form-control" placeholder="Height" required>
+                </div>
+                <div class="form-group">
+                    <label for="width">Width:</label>
+                    <input type="number" step="any" min="0" name="width" id="width" class="form-control" placeholder="Width" required>
+                </div>
+                <div class="form-group">
+                    <label for="size_unit">Unit:</label>
+                    <select name="size_unit" id="size_unit" class="form-control" style="max-width:120px;">
+                        <option value="ft">ft</option>
+                        <option value="in">inches</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Sticker Price</button>
+            </form>
+            {% if sticker_price is not none %}
+                <div class="alert alert-info">
+                    <strong>Sticker Price (₵):</strong> {{ sticker_price }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-section">
+            <h2>One-Way Vision Price Calculator</h2>
+            <form method="post" style="margin-bottom:20px;">
+                <input type="hidden" name="service_type" value="oneway">
+                <div class="form-group">
+                    <label for="oneway_qty">Quantity:</label>
+                    <input type="number" step="any" min="1" name="oneway_qty" id="oneway_qty" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="oneway_height">Height:</label>
+                    <input type="number" step="any" min="0" name="oneway_height" id="oneway_height" class="form-control" placeholder="Height" required>
+                </div>
+                <div class="form-group">
+                    <label for="oneway_width">Width:</label>
+                    <input type="number" step="any" min="0" name="oneway_width" id="oneway_width" class="form-control" placeholder="Width" required>
+                </div>
+                <div class="form-group">
+                    <label for="oneway_size_unit">Unit:</label>
+                    <select name="oneway_size_unit" id="oneway_size_unit" class="form-control" style="max-width:120px;">
+                        <option value="ft">ft</option>
+                        <option value="in">inches</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate One-Way Vision Price</button>
+            </form>
+            {% if oneway_price is not none %}
+                <div class="alert alert-info">
+                    <strong>One-Way Vision Price (₵):</strong> {{ oneway_price }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="service-col">
+        <div class="form-section">
+            <h2>DTF Price Calculator</h2>
+            <form method="post" style="margin-bottom:20px;">
+                <input type="hidden" name="service_type" value="dtf">
+                <div class="form-group">
+                    <label for="dtf_qty">Quantity:</label>
+                    <input type="number" step="any" min="1" name="dtf_qty" id="dtf_qty" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="dtf_size">Size:</label>
+                    <select name="dtf_size" id="dtf_size" class="form-control" style="max-width:120px;">
+                        <option value="A4">A4</option>
+                        <option value="A3">A3</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate DTF Price</button>
+            </form>
+            {% if dtf_price is not none %}
+                <div class="alert alert-info">
+                    <strong>DTF Price (₵):</strong> {{ dtf_price }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="service-col">
+        <div class="form-section">
+            <h2>Banner Price Calculator</h2>
+            <form method="post" style="margin-bottom:20px;">
+                <input type="hidden" name="service_type" value="banner">
+                <div class="form-group">
+                    <label for="banner_qty">Quantity:</label>
+                    <input type="number" step="any" min="1" name="banner_qty" id="banner_qty" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="banner_height">Height:</label>
+                    <input type="number" step="any" min="0" name="banner_height" id="banner_height" class="form-control" placeholder="Height" required>
+                </div>
+                <div class="form-group">
+                    <label for="banner_width">Width:</label>
+                    <input type="number" step="any" min="0" name="banner_width" id="banner_width" class="form-control" placeholder="Width" required>
+                </div>
+                <div class="form-group">
+                    <label for="banner_size_unit">Unit:</label>
+                    <select name="banner_size_unit" id="banner_size_unit" class="form-control" style="max-width:120px;">
+                        <option value="ft">ft</option>
+                        <option value="in">inches</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Banner Price</button>
+            </form>
+            {% if banner_price is not none %}
+                <div class="alert alert-info">
+                    <strong>Banner Price (₵):</strong> {{ banner_price }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-section">
+            <h2>Transparent Price Calculator</h2>
+            <form method="post" style="margin-bottom:20px;">
+                <input type="hidden" name="service_type" value="transparent">
+                <div class="form-group">
+                    <label for="transparent_qty">Quantity:</label>
+                    <input type="number" step="any" min="1" name="transparent_qty" id="transparent_qty" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="transparent_height">Height:</label>
+                    <input type="number" step="any" min="0" name="transparent_height" id="transparent_height" class="form-control" placeholder="Height" required>
+                </div>
+                <div class="form-group">
+                    <label for="transparent_width">Width:</label>
+                    <input type="number" step="any" min="0" name="transparent_width" id="transparent_width" class="form-control" placeholder="Width" required>
+                </div>
+                <div class="form-group">
+                    <label for="transparent_size_unit">Unit:</label>
+                    <select name="transparent_size_unit" id="transparent_size_unit" class="form-control" style="max-width:120px;">
+                        <option value="ft">ft</option>
+                        <option value="in">inches</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Transparent Price</button>
+            </form>
+            {% if transparent_price is not none %}
+                <div class="alert alert-info">
+                    <strong>Transparent Price (₵):</strong> {{ transparent_price }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

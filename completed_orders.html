@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}Completed Orders{% endblock %}
+{% block header %}Completed Orders{% endblock %}
+{% block content %}
+    <h2>Completed Orders</h2>
+    <div style="margin-bottom: 20px;">
+        <input type="text" id="searchInput" placeholder="Search by customer, service, or date..." onkeyup="filterTable()" style="padding: 8px; width: 300px;">
+      
+    </div>
+    <table class="table" id="ordersTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Payment Mode</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in completed_orders %}
+            <tr>
+                <td>{{ order[0] }}</td>
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td>{{ order[4] }}</td>
+                <td>{{ order[5] }}</td>
+                <td>{{ order[6] }}</td>
+                <td>
+                    <a href="/order_details/{{ order[0] }}" class="btn btn-info btn-sm">View</a>
+                    <button onclick="printOrder('{{ order[0] }}')" class="btn btn-secondary btn-sm">Print</button>
+                    <label style="margin-right:8px;">
+                        <input type="checkbox" name="status_{{ order[0] }}" value="Paid" onclick="toggleExclusive(this, '{{ order[0] }}'); updatePaymentStatus(this, '{{ order[0] }}')" {% if order[4] == 'Paid' %}checked{% endif %}> Paid
+                    </label>
+                    <label>
+                        <input type="checkbox" name="status_{{ order[0] }}" value="Credit" onclick="toggleExclusive(this, '{{ order[0] }}'); updatePaymentStatus(this, '{{ order[0] }}')" {% if order[4] == 'Credit' %}checked{% endif %}> Credit
+                    </label>
+    <script>
+
+    function printOrder(orderId) {
+        window.open('/print_order/' + orderId, '_blank', 'width=800,height=600');
+    }
+
+    function toggleExclusive(checkbox, orderId) {
+        var checkboxes = document.querySelectorAll('input[name="status_' + orderId + '"]');
+        checkboxes.forEach(function(cb) {
+            if (cb !== checkbox) cb.checked = false;
+        });
+    }
+
+    </script>
+                </td>
+            </tr>
+            {% endfor %}
+    <script>
+    function updatePaymentStatus(checkbox, orderId) {
+        var status = checkbox.value;
+        if (!checkbox.checked) {
+            // If unchecked, do not update
+            return;
+        }
+        fetch('/update_payment_status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ order_id: orderId, status: status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Optionally show a success message
+            } else {
+                alert('Failed to update payment status');
+            }
+        });
+    }
+    </script>
+        </tbody>
+    </table>
+    <script>
+    function filterTable() {
+        var input = document.getElementById('searchInput');
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById('ordersTable');
+        var trs = table.getElementsByTagName('tr');
+        for (var i = 1; i < trs.length; i++) {
+            var tds = trs[i].getElementsByTagName('td');
+            var show = false;
+            for (var j = 0; j < tds.length - 1; j++) {
+                if (tds[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                    show = true;
+                    break;
+                }
+            }
+            trs[i].style.display = show ? '' : 'none';
+        }
+    }
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("#ordersTable tr");
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            for (var j = 0; j < cols.length - (i === 0 ? 0 : 1); j++) {
+                row.push('"' + cols[j].innerText.replace(/"/g, '""') + '"');
+            }
+            csv.push(row.join(","));
+        }
+        var csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+        var downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+    </script>
+    <style>
+        .table th, .table td { padding: 10px; text-align: left; }
+        .btn { padding: 4px 10px; border-radius: 4px; text-decoration: none; margin-right: 4px; }
+        .btn-info { background: #007bff; color: #fff; border: none; }
+        .btn-secondary { background: #6c757d; color: #fff; border: none; }
+        .btn-sm { font-size: 0.85em; }
+        #searchInput { border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+{% endblock %}

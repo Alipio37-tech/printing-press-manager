@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Credit Customers{% endblock %}
+{% block header %}Credit Customers{% endblock %}
+{% block content %}
+<div class="form-section" style="max-width:700px;margin:auto;">
+    <h2>Credit Customers</h2>
+    <button onclick="printAllCreditCustomers()" style="margin-bottom:10px;float:right;" class="btn btn-secondary btn-sm">Print All</button>
+    {% if credit_customers and credit_customers|length > 0 %}
+    <table id="creditCustomersTable" style="width:100%;border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in credit_customers %}
+            <tr>
+                <td>{{ customer[0] }}</td>
+                <td>{{ customer[1] }}</td>
+                <td>{{ customer[2] }}</td>
+                <td>{{ customer[3] }}</td>
+                <td>{{ customer[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+    function printAllCreditCustomers() {
+        var printContents = document.getElementById('creditCustomersTable').outerHTML;
+        var win = window.open('', '', 'height=700,width=900');
+        win.document.write('<html><head><title>Credit Customers</title>');
+        win.document.write('<style>table{width:100%;border-collapse:collapse;}th,td{padding:10px;border:1px solid #ccc;text-align:left;}</style>');
+        win.document.write('</head><body>');
+        win.document.write('<h2>Credit Customers</h2>');
+        win.document.write(printContents);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.print();
+    }
+    </script>
+    {% else %}
+    <p>No customers have credit orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

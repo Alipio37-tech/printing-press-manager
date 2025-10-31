@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Add Order{% endblock %}
+{% block header %}Add Order{% endblock %}
+{% block content %}
+<div class="form-section" style="max-width:500px;margin:auto;">
+    <h2>Add Service Order</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="customer_id">Customer:</label>
+            <select name="customer_id" id="customer_id" class="form-control" required>
+                <option value="">Select Customer</option>
+                {% for customer in customers %}
+                <option value="{{ customer[0] }}">{{ customer[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="service">Service Type:</label>
+            <select name="service" id="service" class="form-control" multiple required>
+                <option value="banner">Banner</option>
+                <option value="sticker">Sticker</option>
+                <option value="oneway">One-Way Vision</option>
+                <option value="dtf">DTF</option>
+                <option value="transparent">Transparent</option>
+            </select>
+            <small>Hold Ctrl (Windows) or Command (Mac) to select multiple services.</small>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount (GHC):</label>
+            <input type="number" step="any" min="0" name="amount" id="amount" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="payment_mode">Mode of Payment:</label>
+            <select name="payment_mode" id="payment_mode" class="form-control" required>
+                <option value="cash">Cash</option>
+                <option value="momo">Mobile Money</option>
+                <option value="card">Card</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="job_date">Order Date:</label>
+            <input type="date" name="order_date" id="order_date" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Order</button>
+    </form>
+</div>
+{% endblock %}

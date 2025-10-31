@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Order Details{% endblock %}
+{% block content %}
+<div style="max-width:600px;margin:auto;padding:30px;border:1px solid #ccc;background:#fff;">
+    <h2 style="text-align:center;">Order Details</h2>
+    <hr>
+    <table style="width:100%;font-size:1.1em;">
+        <tr><td><strong>Order ID:</strong></td><td>{{ order[0] }}</td></tr>
+        <tr><td><strong>Customer Name:</strong></td><td>{{ order[1] }}</td></tr>
+        <tr><td><strong>Mobile:</strong></td><td>{{ order[2] }}</td></tr>
+        <tr><td><strong>Email:</strong></td><td>{{ order[3] }}</td></tr>
+        <tr><td><strong>Address:</strong></td><td>{{ order[4] }}</td></tr>
+        <tr><td><strong>Service:</strong></td><td>{{ order[5] }}</td></tr>
+        <tr><td><strong>Amount:</strong></td><td>{{ order[6] }}</td></tr>
+        <tr><td><strong>Payment Mode:</strong></td><td>{{ order[7] }}</td></tr>
+        <tr><td><strong>Order Date:</strong></td><td>{{ order[8] }}</td></tr>
+        <tr><td><strong>Status:</strong></td><td>{{ order[9] }}</td></tr>
+    </table>
+    <hr>
+    <div style="text-align:center;margin-top:30px;">
+        <a href="/completed_orders" class="btn btn-info">Back to Completed Orders</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Edit User{% endblock %}
+{% block header %}Edit User{% endblock %}
+{% block content %}
+    <div class="form-section" style="max-width:500px;margin:auto;">
+        <h2 style="margin-bottom:24px;">Edit User</h2>
+        <form method="post" class="styled-form">
+            <div style="margin-bottom:18px;">
+                <label for="username" style="font-weight:500;margin-bottom:6px;display:block;">Username</label>
+                <input type="text" id="username" name="username" value="{{ user[1] }}" required>
+            </div>
+            <div style="margin-bottom:18px;">
+                <label for="password" style="font-weight:500;margin-bottom:6px;display:block;">Password</label>
+                <input type="password" id="password" name="password" value="{{ user[2] }}" required>
+            </div>
+            <button type="submit" style="background:#3f51b5;font-weight:700;font-size:1.1em;width:100%;margin-top:10px;">Update User</button>
+        </form>
+    </div>
+{% endblock %}
